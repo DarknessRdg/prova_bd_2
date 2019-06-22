@@ -34,6 +34,7 @@ CREATE TABLE aluno_turma(
  
 CREATE TABLE professor(
     id_professor serial NOT NULL PRIMARY KEY,
+    nome_professor varchar(255) NOT NULL,
     nascimento_professor DATE NOT NULL,
     cpf varchar(11) NOT NULL,
     matricula_professor varchar(10) NOT NULL
