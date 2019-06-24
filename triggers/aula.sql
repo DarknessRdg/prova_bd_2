@@ -18,9 +18,14 @@ BEGIN
     SELECT ano, e_medio INTO ano_disciplina, e_medio_disciplina FROM disciplina WHERE id_disciplina = NEW.id_disciplina;
  
     IF ano_turma != ano_disciplina THEN
-        raise exception 'Ano da disciplina tem que ser igual ao da turma';
-    elsif e_medio_disciplina != e_medio_turma THEN
-        raise exception 'Grau (medio / fundamental) da disciplina tem que ser igual ao da turma';
+        raise exception 'Ano da disciplina tem que ser igual ao da turma.';
+    ELSIF e_medio_disciplina != e_medio_turma THEN
+        raise exception 'Grau (medio / fundamental) da disciplina tem que ser igual ao da turma.';
+    ELSIF EXISTS (SELECT * FROM aula WHERE 
+            id_turma = new.id_turma and id_professor = new.id_professor and id_disciplina = new.id_disciplina and 
+            ano_letivo = new.ano_letivo
+        ) then
+        raise exception 'Aula já cirada.';
     END IF;
     NEW.ano_letivo := ano_turma;
     RETURN NEW;
