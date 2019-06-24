@@ -27,7 +27,7 @@ BEGIN
         ) then
         raise exception 'Aula já cirada.';
     END IF;
-    NEW.ano_letivo := ano_turma;
+
     RETURN NEW;
  
 END;
