@@ -83,7 +83,22 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER verificar_gabarito BEFORE INSERT OR UPDATE ON gabarito
     FOR EACH ROW EXECUTE PROCEDURE validate_gabarito();
 	
-
+	
+	
+ 
+CREATE OR REPLACE FUNCTION on_delete_gabarito() RETURNS TRIGGER AS $$
+BEGIN
+	update questao set finalizada = false where id_questao = old.id_questao;
+	update prova set finalizada = false where id_prova = old.id_prova;
+   	return old;
+    
+END;
+$$ LANGUAGE plpgsql;
+ 
+ 
+CREATE TRIGGER on_delete_gabarito BEFORE DELETE ON gabarito
+    FOR EACH ROW EXECUTE PROCEDURE on_delete_gabarito();
+	
 
 
 
