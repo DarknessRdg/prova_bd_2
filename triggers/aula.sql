@@ -25,7 +25,7 @@ BEGIN
             id_turma = new.id_turma and id_professor = new.id_professor and id_disciplina = new.id_disciplina and 
             ano_letivo = new.ano_letivo
         ) then
-        raise exception 'Aula já cirada.';
+        raise exception 'Aula já criada.';
     END IF;
 
     RETURN NEW;
