@@ -1,4 +1,11 @@
-insert into resposta(id_resposta,id_aluno, id_gabarito, id_aplicacao) values 
-(1,1,1,1), -- não passam no triger novo
-(2,1,6,1), -- não passam no triger novo
-(3,4,9,1);
+INSERT INTO resposta(id_resposta, id_aluno, id_aplicacao, id_gabarito) VALUES
+(1, 3, 46, 4),
+(2, 3, 46, 6),
+(3, 3, 46, 20),
+(4, 3, 46, 11),
+(5, 3, 46, 25),
+(6, 3, 46, 26),
+(7, 3, 46, 31),
+(8, 3, 46, 40),
+(9, 3, 46, 43),
+(10, 3, 46, 46);
