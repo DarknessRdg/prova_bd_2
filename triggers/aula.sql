@@ -22,9 +22,8 @@ BEGIN
     ELSIF e_medio_disciplina != e_medio_turma THEN
         raise exception 'Grau (medio / fundamental) da disciplina tem que ser igual ao da turma.';
     ELSIF EXISTS (SELECT * FROM aula WHERE 
-            id_turma = new.id_turma and id_professor = new.id_professor and id_disciplina = new.id_disciplina and 
-            ano_letivo = new.ano_letivo
-        ) then
+            id_turma = new.id_turma and id_disciplina = new.id_disciplina and ano_letivo = new.ano_letivo
+        ) THEN
         raise exception 'Aula já criada.';
     END IF;
 
