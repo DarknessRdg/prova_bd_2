@@ -22,12 +22,12 @@ DECLARE
     media_1 decimal(4,2);
     media_2 decimal(4,2);
 BEGIN
-    FOR aplicacao IN (SELECT id_aplicacao, d.descricao FROM disciplina d NATURAL JOIN aplicacao NATURAL JOIN aula a WHERE a.id_aula = $2) LOOP
+    SELECT d.descricao INTO descricao FROM aula a NATURAL JOIN disciplina d WHERE a.id_aula = $2;
+    FOR aplicacao IN (SELECT id_aplicacao FROM disciplina d NATURAL JOIN aplicacao NATURAL JOIN aula a WHERE a.id_aula = $2) LOOP
         notas[indice] := nota_do_aluno(id_aluno, aplicacao.id_aplicacao);
-        descricao := aplicacao.descricao;
         indice := indice + 1;
     END LOOP;
-    
+
     media_1 := (notas[1] + notas[2] + notas[3] + notas[4]) / 4.0;
     media_2 := (notas[5] + notas[6] + notas[7] + notas[8]) / 4.0;
     RETURN query SELECT descricao,
