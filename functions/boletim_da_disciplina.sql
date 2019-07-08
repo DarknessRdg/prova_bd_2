@@ -1,3 +1,6 @@
+
+
+select * from boletim_do_aluno(3, 5, 2019)
 /*
  * Funcao que retorna o notas do aluno(estilo boletim) de um aluno de uma unica disciplina
  * Args:
@@ -28,6 +31,11 @@ BEGIN
         indice := indice + 1;
     END LOOP;
 
+    indice := 1;
+    WHILE indice <= 8 loop
+	notas[indice] := cast(COALESCE(notas[indice], 0) AS decimal(4,2));
+	indice := indice + 1;
+    END LOOP;
     media_1 := (notas[1] + notas[2] + notas[3] + notas[4]) / 4.0;
     media_2 := (notas[5] + notas[6] + notas[7] + notas[8]) / 4.0;
     RETURN query SELECT descricao,
