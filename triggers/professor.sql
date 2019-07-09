@@ -3,7 +3,7 @@
  */
 create or replace function inserir_professor() returns trigger as $$
 begin
-	EXECUTE FORMAT('CREATE ROLE "%s" LOGIN PASSWORD ''%s'' IN GROUP professor', new.matricula_professor, new.matricula_professor);
+	EXECUTE FORMAT('CREATE USER "%s" LOGIN PASSWORD ''%s'' IN GROUP professor', new.matricula_professor, new.matricula_professor);
 	return new;
 end;
 $$ language plpgsql;

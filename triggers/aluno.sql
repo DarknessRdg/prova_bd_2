@@ -3,7 +3,7 @@
  */
 create or replace function inserir_aluno() returns trigger as $$
 begin
-	EXECUTE FORMAT('CREATE ROLE "%s" LOGIN PASSWORD ''%s'' IN GROUP ALUNO', new.matricula_aluno, new.matricula_aluno);
+	EXECUTE FORMAT('CREATE USER "%s" LOGIN PASSWORD ''%s'' IN GROUP ALUNO', new.matricula_aluno, new.matricula_aluno);
 	return new;
 end;
 $$ language plpgsql;
