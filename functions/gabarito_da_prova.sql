@@ -20,6 +20,7 @@ CREATE OR REPLACE FUNCTION gabarito_da_prova(prova INT) RETURNS
     )
 AS $$
 BEGIN
-    RETURN query SELECT * FROM gabarito g WHERE g.id_prova = prova ORDER BY g.id_questao, g.id_gabarito;
+    RETURN query SELECT g.id_gabarito, g.id_prova, g.id_questao, g.id_alternativa, g.e_certo 
+        FROM gabarito g WHERE g.id_prova = prova ORDER BY g.id_questao, g.id_gabarito;
 END;
 $$ LANGUAGE plpgsql;
