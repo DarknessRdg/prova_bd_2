@@ -44,6 +44,6 @@ BEGIN
 		/* TABLE PARA RETURNO FORMATADA CO*/
         t.descricao, t.prova_1, t.prova_2, t.prova_3, t.prova_4, t.media_1, 
 		t.prova_5,  t.prova_6, t.prova_7, t.prova_8, t.media_2, t.media_final
-        FROM tmp_boletim_do_aluno t;
+        FROM tmp_boletim_do_aluno t order by t.descricao;
 END;
 $$ LANGUAGE plpgsql;
