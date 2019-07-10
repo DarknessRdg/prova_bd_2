@@ -1,4 +1,4 @@
-﻿-- CRIACAO DAS TABELAS DO BANCO DE DADOS
+-- CRIACAO DAS TABELAS DO BANCO DE DADOS
 
 
 CREATE TABLE aluno(
@@ -20,7 +20,7 @@ CREATE TABLE turma(
     id_turma serial NOT NULL PRIMARY KEY,
     ano INT NOT NULL,
     sigla char(1) NOT NULL,
-    turno char(5), NOT NULL,
+    turno char(5) NOT NULL,
     e_medio bool NOT NULL,
     id_escola INT NOT NULL REFERENCES escola(id_escola) ON DELETE CASCADE
 );
