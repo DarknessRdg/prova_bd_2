@@ -3,7 +3,7 @@ declare
 	matricula varchar(10) := (select matricula_aluno from aluno where id_aluno = pk);
 begin
 	update aluno set aluno_ativo = false where id_aluno = pk;
-	EXECUTE FORMAT('CREATE USER "%s"', matricula);
+	EXECUTE FORMAT('DROP USER "%s"', matricula);
 end;
 $$ language plpgsql;
 
@@ -27,7 +27,7 @@ declare
 	matricula varchar(10) := (select matricula_professor from professor where id_professor = pk);
 begin
 	update professor set professor_ativo = false where id_professor = pk;
-	EXECUTE FORMAT('CREATE USER "%s"', matricula);
+	EXECUTE FORMAT('DROP USER "%s"', matricula);
 end;
 $$ language plpgsql ;
 
