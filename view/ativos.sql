@@ -1,0 +1,12 @@
+create view alunos_ativos as select * from aluno where aluno_ativo = true;
+create view aluno_turmas_ativas as select * from aluno_turma where aluno_turma_ativo = true;
+create view turmas_ativas as select * from turma where turma_ativo = true;
+create view disciplinas_ativas as select * from disciplina where disciplina_ativo = true;
+create view professores_ativos as select * from professor where professor_ativo = true;
+create view aulas_ativas as select * from aula where aula_ativo = true;
+create view aplicacoes_ativas as select * from aplicacao where aplicacao_ativo = true;
+create view provas_ativas as select * from prova where prova_ativo = true;
+create view questoes_ativas as select * from questao where questao_ativo = true;
+create view gabaritos_ativos as select * from gabarito where gabarito_ativo = true;
+create view alternativas_ativas as select * from alternativa where alternativa_ativo = true;
+create view respostas_ativas as select * from resposta where resposta_ativo = true;

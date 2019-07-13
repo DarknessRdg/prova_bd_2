@@ -149,10 +149,13 @@ create or replace function criar_resposta(a int, ap int, g int) returns void as 
 declare 
 	pk int := (select max(id_resposta) + 1 from resposta);
 begin
-	if (select prova_ativo from prova where id_prova = p) and 
-	   (select questao_ativo from questao where id_questao = q) and
-	   (select alternativa_ativo from alternativa where id_alternativa = a) then	
-	INSERT INTO resposta(id_resposta, id_aluno, id_aplicacao, id_gabarito) VALUES
-	(pk, a, ap, g);
+	if (select aplicacao_ativo from aplicacao where id_aplicacao = ap) and 
+	   (select gabarito_ativo from gabarito where id_gabarito= g) and
+	   (select aluno_ativo from aluno where id_aluno = a) then	
+			INSERT INTO resposta(id_resposta, id_aluno, id_aplicacao, id_gabarito) VALUES
+			(pk, a, ap, g);
+	else 
+		raise exception 'aluno ou gabarito ou aplicacao não existe';
+	end if;
 end;
-$$ language plpgsql;
+$$ language plpgsq
