@@ -11,7 +11,7 @@ create or replace function vincular_aluno_a_turma(a int, b int) returns void as 
 declare 
 	pk int := (select max(id_aluno_turma) + 1 from aluno_turma);
 begin
-	if (select aluno_ativo from aluno where id_aluno = a) and (select turma_ativo from turma where id_turma = a) then
+	if (select aluno_ativo from aluno where id_aluno = a) and (select turma_ativo from turma where id_turma = b) then
 		insert into aluno_turma(id_aluno_turma, id_aluno, id_turma, data) values (pk, $1, $2, now());
 	else
 		raise exception 'Aluno ou turma nao existe';
@@ -37,6 +37,16 @@ begin
 	(pk, n, nasc, cpf_, matricula);
 end;
 $$ language plpgsql ;
+
+create or replace function criar_disciplina(d varchar(255), ano int,medio boolean) returns void as $$
+declare 
+	pk int := (select max(id_disciplina) + 1 from disciplina);
+begin
+	insert into disciplina(id_disciplina, descricao, ano, e_medio) values
+	(pk, d,ano,medio);
+end;
+$$ language plpgsql ;
+
 
 
 create or replace function criar_aula(t int, d int, p int, a int) returns void as $$
@@ -134,12 +144,14 @@ end;
 $$ language plpgsql;
 
 
-(select gabarito_ativo from gabarito where id_gabarito = g)
 
 create or replace function criar_resposta(a int, ap int, g int) returns void as  $$
 declare 
 	pk int := (select max(id_resposta) + 1 from resposta);
 begin
+	if (select prova_ativo from prova where id_prova = p) and 
+	   (select questao_ativo from questao where id_questao = q) and
+	   (select alternativa_ativo from alternativa where id_alternativa = a) then	
 	INSERT INTO resposta(id_resposta, id_aluno, id_aplicacao, id_gabarito) VALUES
 	(pk, a, ap, g);
 end;

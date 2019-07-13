@@ -7,7 +7,7 @@ $$ language plpgsql;
 
 create or replace function desvincular_aluno_a_turma(pk int) returns void as  $$
 begin
-	update  aluno_turma_ set aluno_turma_ativo = false where id_aluno_turma = pk;
+	update  aluno_turma set aluno_turma_ativo = false where id_aluno_turma = pk;
 end;
 $$ language plpgsql;
 
@@ -24,6 +24,12 @@ begin
 	update professor set professor_ativo = false where id_professor = pk;
 end;
 $$ language plpgsql ;
+
+create or replace function deletar_disciplina(pk int) returns void as  $$
+begin
+	update  disciplina set disciplina_ativo = false where id_disciplina = pk;
+end;
+$$ language plpgsql;
 
 
 create or replace function deletar_aula(pk int) returns void as $$
@@ -77,6 +83,6 @@ $$ language plpgsql;
 
 create or replace function deletar_resposta(pk int) returns void as  $$
 begin
-	update repsosta set repsosta_ativo = false where id_repsosta = pk;
+	delete from resposta where id_resposta = pk;
 end;
 $$ language plpgsql;

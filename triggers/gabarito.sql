@@ -17,7 +17,7 @@ DECLARE
 BEGIN
     SELECT * INTO questao FROM questao WHERE id_questao = NEW.id_questao;
     SELECT * INTO prova FROM prova WHERE id_prova = NEW.id_prova;
-	SELECT count(*) INTO quantidade_de_alternativas from gabarito where id_prova = NEW.id_prova and id_questao = NEW.id_questao;
+	SELECT count(*) INTO quantidade_de_alternativas from gabarito where id_prova = NEW.id_prova and id_questao = NEW.id_questao and gabarito_ativo = true ;
 	SELECT count(*) INTO quantidade_de_questoes from (SELECT count(*) from gabarito where id_prova = NEW.id_prova GROUP BY id_questao) AB;
     
 	-- CONDICAO 1
@@ -46,7 +46,7 @@ BEGIN
 	END IF;
 		
 	-- CONDICAO 4
-	IF true in (SELECT e_certo FROM gabarito where id_prova = NEW.id_prova and id_questao = NEW.id_questao )THEN
+	IF true in (SELECT e_certo FROM gabarito where id_prova = NEW.id_prova and id_questao = NEW.id_questao and gabarito_ativo = true )THEN
 		IF NEW.e_certo = true THEN
 			raise exception 'somente uma alternativa certa por questão';
 		END IF;
@@ -55,8 +55,10 @@ BEGIN
 	END IF;
 		
 	-- CONDICAO 5
-	IF NEW.id_alternativa in (SELECT id_alternativa from gabarito where id_prova = NEW.id_prova and id_questao = NEW.id_questao  ) THEN 
-		raise exception 'não é possivel colocar a mesma alternativa em uma questão';
+	IF NEW.id_alternativa in (SELECT id_alternativa from gabarito where id_prova = NEW.id_prova and id_questao = NEW.id_questao and gabarito_ativo = true ) THEN 
+		if (new.gabarito_ativo) then
+			raise exception 'não é possivel colocar a mesma alternativa em uma questão';
+		end if;
 	END IF;
 
 	-- CONDICAO 6 
@@ -78,6 +80,7 @@ BEGIN
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+
  
  
 CREATE TRIGGER verificar_gabarito BEFORE INSERT OR UPDATE ON gabarito

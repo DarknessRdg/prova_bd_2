@@ -20,7 +20,9 @@ BEGIN
     IF  aula.id_disciplina != prova.id_disciplina THEN
         raise exception 'A disciplina da prova deve ser igual a disciplina da aula.';
     ELSIF diferenca <  3 THEN
-        raise exception 'A prova so pode ser repetida para a mesma turma a cada 3 anos.';
+        IF TG_OP = 'INSERT' THEN
+            raise exception 'A prova so pode ser repetida para a mesma turma a cada 3 anos.';
+        END IF;
     ELSIF EXTRACT(YEAR FROM NEW.data_aplicacao) < aula.ano_letivo THEN
         raise exception 'Nao é possivel cadastrar aplicacoes para aulas de anos anteriores.';
     ELSIF EXTRACT(YEAR FROM NEW.data_aplicacao) > aula.ano_letivo THEN 
